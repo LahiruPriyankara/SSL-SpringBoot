@@ -1,0 +1,74 @@
+
+REF: 
+https://docs.oracle.com/cd/E19830-01/819-4712/ablqw/index.html#:~:text=jks%2C%20contains%20the%20Application%20Server%27s%20trusted%20certificates%2C%20including%20public%20keys,of%20certification%20authorities%20(CAs).
+https://www.thomasvitale.com/https-spring-boot-ssl-certificate/
+https://www.educba.com/spring-boot-https/
+
+keystore of type JKS using an RSA key algorithm. RSA is public-key encryption technology developed by RSA Data Security, Inc
+keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias ${cert.alias} -dname  ${dn.name} -keypass ${key.pass} -keystore ${keystore.file} -storepass ${keystore.pass}
+
+
+Create a self-signed certificate in a keystore of type JKS using the default key algorithm.
+keytool -genkey -noprompt -trustcacerts -alias ${cert.alias} -dname ${dn.name} -keypass ${key.pass} -keystore ${keystore.file} -storepass ${keystore.pass}
+
+EX:
+keytool -genkey -alias keyAlias -keyalg RSA -keypass changeit -storepass changeit -keystore keystore.jks
+keytool -genkeypair -alias main-app-keystore-one -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore main-app-keystore-one.p12 -storepass 123456789 -keypass 123456 -validity 365 -ext san=dns:localhost
+
+Display available certificates from a keystore of type JKS
+keytool -list -v  -keystore ${keystore.file} -storepass ${keystore.pass}
+EX:
+keytool -list -v  -keystore main-app-keystore-one.p12 -storepass 123456789
+
+Display certificate information from a keystore of type JKS.
+keytool  -list -v  -alias ${cert.alias} -keystore ${keystore.file} -storepass ${keystore.pass}
+EX:
+keytool  -list -v  -alias main-app-keystore-one -keystore main-app-keystore-one.p12 -storepass 123456789
+
+
+Import an RFC/text-formatted certificate into a JKS store. 
+Certificates are often stored using the printable encoding format defined by the Internet RFC (Request for Comments) 1421 standard instead of their binary encoding. This certificate format, also known as Base 64 encoding, facilitates exporting certificates to other applications by email or through some other mechanism.
+keytool -import -noprompt -trustcacerts -alias ${cert.alias} -file ${cert.file} -keystore ${keystore.file} -storepass ${keystore.pass}
+
+EX:
+keytool -import -v -trustcacerts -alias main-app-keystore-one -file main-app-keystore-one.crt -keystore main-app-keystore-one.jks -storepass 123456789
+keytool -import -noprompt -trustcacerts -alias main-app-keystore-one -file "E:\My\MyProject\SSL\lahiru.crt" -keystore "C:\Program Files\Amazon Corretto\jdk11.0.13_8\lib\security" 
+
+keytool -import -noprompt -trustcacerts -alias sub-app-keystore-one -file "E:\My\MyProject\SSL\sub-app-keystore-one.crt" -keystore "C:\Program Files\Amazon Corretto\jdk11.0.13_8\lib\security" -storepass 123456789
+
+Will Display
+Certificate was added to keystore
+[Saving cacerts.jks]
+
+
+
+http://localhost:443/ssl-main/get/one
+
+
+Export a certificate from a keystore of type JKS in PKCS7 format
+keytool -export -noprompt  -alias ${cert.alias} -file ${cert.file} -keystore ${keystore.file} -storepass ${keystore.pass}
+
+Export a certificate from a keystore of type JKS in RFC/text format
+keytool -export -noprompt -rfc  -alias ${cert.alias} -file ${cert.file} -keystore ${keystore.file} -storepass ${keystore.pass}
+
+EX:
+keytool -export -keystore keystore-p12-2.p12 -alias server-alias-pk12-two -file keystore-p12-2.crt
+keytool -export -alias main-app-keystore-one -storepass 123456789 -file main-app-keystore-one.crt -keystore main-app-keystore-one.p12
+keytool -export -alias main-app-keystore-one -storepass 123456789 -file main-app-keystore-one.crt -keystore main-app-keystore-one.p12
+
+
+Delete a certificate from a keystore of type JKS.
+keytool -delete -noprompt -alias ${cert.alias}  -keystore ${keystore.file} -storepass ${keystore.pass}
+
+
+EX:
+keytool -delete -alias keyAlias -keystore keystore-name -storepass password
+keytool -delete -noprompt -alias main-app-keystore-one  -keystore main-app-keystore-one.p12 -storepass 123456789
+
+
+
+
+
+
+Injection
+https://reflectoring.io/constructor-injection/#:~:text=to%20their%20mutability.-,Conclusion,NullPointerException%20s%20and%20other%20errors.
