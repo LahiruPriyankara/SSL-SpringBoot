@@ -42,9 +42,6 @@ Certificate was added to keystore
 
 
 
-http://localhost:443/ssl-main/get/one
-
-
 Export a certificate from a keystore of type JKS in PKCS7 format
 keytool -export -noprompt  -alias ${cert.alias} -file ${cert.file} -keystore ${keystore.file} -storepass ${keystore.pass}
 
@@ -53,8 +50,7 @@ keytool -export -noprompt -rfc  -alias ${cert.alias} -file ${cert.file} -keystor
 
 EX:
 keytool -export -keystore keystore-p12-2.p12 -alias server-alias-pk12-two -file keystore-p12-2.crt
-keytool -export -alias main-app-keystore-one -storepass 123456789 -file main-app-keystore-one.crt -keystore main-app-keystore-one.p12
-keytool -export -alias main-app-keystore-one -storepass 123456789 -file main-app-keystore-one.crt -keystore main-app-keystore-one.p12
+keytool -export -alias main-app-keystore-one -storepass 123456789 -file main-app-keystore-one.crt -keystore main-app-keystore-one.p12 -storetype pkcs12
 
 
 Delete a certificate from a keystore of type JKS.
